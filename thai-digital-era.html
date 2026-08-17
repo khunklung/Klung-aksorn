@@ -1113,6 +1113,34 @@ function unlockQuiz(chapterNum){
   if(body) body.style.display = 'block';
 }
 
+const STUDENT_INFO_KEY = 'mpp_student_info_v1';
+
+function saveStudentInfo(){
+  const info = {
+    first: document.getElementById('stuFirst').value,
+    last: document.getElementById('stuLast').value,
+    cls: document.getElementById('stuClass').value,
+    num: document.getElementById('stuNumber').value,
+    photo: (document.getElementById('photoPreview').dataset.photo) || ''
+  };
+  try{ localStorage.setItem(STUDENT_INFO_KEY, JSON.stringify(info)); }catch(e){}
+}
+
+function loadStudentInfo(){
+  let info;
+  try{ info = JSON.parse(localStorage.getItem(STUDENT_INFO_KEY) || 'null'); }catch(e){ info = null; }
+  if(!info) return;
+  if(info.first) document.getElementById('stuFirst').value = info.first;
+  if(info.last) document.getElementById('stuLast').value = info.last;
+  if(info.cls) document.getElementById('stuClass').value = info.cls;
+  if(info.num) document.getElementById('stuNumber').value = info.num;
+  if(info.photo){
+    const preview = document.getElementById('photoPreview');
+    preview.innerHTML = `<img src="${info.photo}" alt="รูปนักเรียน">`;
+    preview.dataset.photo = info.photo;
+  }
+}
+
 function previewPhoto(){
   const input = document.getElementById('stuPhoto');
   const preview = document.getElementById('photoPreview');
@@ -1122,9 +1150,16 @@ function previewPhoto(){
   reader.onload = (e)=>{
     preview.innerHTML = `<img src="${e.target.result}" alt="รูปนักเรียน">`;
     preview.dataset.photo = e.target.result;
+    saveStudentInfo();
   };
   reader.readAsDataURL(file);
 }
+
+loadStudentInfo();
+['stuFirst','stuLast','stuClass','stuNumber'].forEach(function(id){
+  const el = document.getElementById(id);
+  if(el) el.addEventListener('input', saveStudentInfo);
+});
 
 function showResultModal(info){
   document.getElementById('modalPhoto').src = info.photo;
