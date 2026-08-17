@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>บทที่ ๑๓ ระดับภาษา</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ruby:#9B1B30;
+    --ruby-deep:#711526;
+    --gold:#C8973A;
+    --gold-light:#E8D3A4;
+    --bg:#F9F4F0;
+    --white:#FFFFFF;
+    --ink:#1A1A1A;
+    --ink-soft:#5A5450;
+    --success:#4B7A4E;
+    --success-bg:#EEF3EA;
+    --danger:#8C2F2F;
+    --danger-bg:#F7EAE8;
+    --line:#E6D9C8;
+    --shadow: 0 8px 24px -14px rgba(26,26,26,0.22);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Sarabun',sans-serif;
+  }
+  h1,h2,h3,h4{font-family:'Noto Serif Thai',serif; margin:0;}
+  a{color:inherit;}
+
+  .topbar{
+    background: var(--ruby); color:#fff; padding:30px 20px 30px; text-align:center;
+    position:relative; overflow:hidden; border-bottom:3px solid var(--gold);
+  }
+  .topbar::before, .topbar::after{
+    content:""; position:absolute; top:14px; width:34px; height:34px;
+    border:2px solid rgba(232,211,164,0.55); border-radius:2px; transform:rotate(45deg);
+  }
+  .topbar::before{left:22px;}
+  .topbar::after{right:22px;}
+  .back-home{
+    position:absolute; top:14px; left:14px; z-index:3;
+    display:inline-flex; align-items:center; gap:6px; text-decoration:none;
+    font-family:'Sarabun',sans-serif; font-size:13px; font-weight:600; color:#fff;
+    background:rgba(0,0,0,0.18); border:1px solid rgba(232,211,164,0.55); border-radius:3px;
+    padding:7px 12px; transition:background .2s ease;
+  }
+  .back-home:hover{background:rgba(0,0,0,0.32);}
+  @media(max-width:560px){ .topbar::before, .topbar::after{display:none;} }
+  .topbar .eyebrow{
+    font-family:'Sarabun',sans-serif; font-size:13px; letter-spacing:4px;
+    color:var(--gold-light); font-weight:600; text-transform:uppercase;
+  }
+  .topbar h1{font-size:clamp(22px,4vw,32px); font-weight:700; margin-top:8px; letter-spacing:.5px;}
+  .topbar p{opacity:.9; margin-top:10px; font-size:15px; font-family:'Sarabun',sans-serif;}
+
+  main{max-width:860px; margin:0 auto; padding:26px 16px 60px;}
+
+  .chapter-head{display:flex; align-items:center; gap:16px; margin:26px 0 20px;}
+  .chapter-head .num{
+    font-family:'Noto Serif Thai',serif; font-weight:700; font-size:24px; color:var(--ruby);
+    background:#fff; width:54px; height:54px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; border:2px solid var(--gold); flex-shrink:0;
+  }
+  .chapter-head h2{font-size:clamp(19px,3vw,25px); color:var(--ink); font-weight:700;}
+  .chapter-head span.sub{display:block; color:var(--ruby); font-size:14px; font-weight:600; margin-top:3px;}
+
+  .card{
+    background:#fff; border-radius:4px; padding:24px 26px; margin-bottom:22px;
+    box-shadow:var(--shadow); border:1px solid var(--line); border-top:3px solid var(--gold);
+  }
+  .card h3{color:var(--ink); font-size:18px; margin-bottom:14px; display:flex; align-items:center; gap:8px; font-weight:700;}
+  .card h3 .tag{
+    font-size:11px; font-family:'Sarabun',sans-serif; letter-spacing:1px; text-transform:uppercase;
+    background:var(--bg); color:var(--ruby); padding:3px 10px; border-radius:2px; font-weight:600; border:1px solid var(--line);
+  }
+  .card p, .card li{line-height:1.9; font-size:15.5px; color:var(--ink-soft);}
+  .card ul, .card ol{padding-right:6px; padding-left:22px;}
+  .content-block{margin-bottom:14px;}
+  .content-block strong{color:var(--ruby); font-weight:700;}
+  blockquote{
+    margin:14px 0; padding:14px 18px; background:var(--bg); border-right:3px solid var(--gold);
+    border-radius:2px; font-style:normal; color:var(--ink); font-size:15px; line-height:1.9;
+  }
+
+  .level-block{border-right:3px solid var(--gold-light); padding:6px 16px 14px 0; margin-bottom:16px;}
+  .level-block:last-child{margin-bottom:0;}
+  .level-block .level-title{
+    font-family:'Noto Serif Thai',serif; font-weight:700; color:var(--ruby); font-size:16.5px; margin-bottom:6px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .level-block .level-num{
+    display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:50%;
+    background:var(--ruby); color:#fff; font-size:13px; flex-shrink:0;
+  }
+  .level-block .example{
+    margin-top:8px; background:var(--bg); border-radius:3px; padding:10px 14px; font-size:14px; color:var(--ink-soft);
+    border-right:2px dashed var(--gold);
+  }
+
+  .divider{display:flex; align-items:center; gap:10px; margin:30px 0; color:var(--gold);}
+  .divider::before, .divider::after{content:""; flex:1; height:1px; background:var(--line);}
+  .divider .node{width:9px; height:9px; background:var(--gold); transform:rotate(45deg);}
+
+  .teacher-note{
+    background:#FBF4E8; border:1.5px dashed var(--gold); border-radius:4px; padding:18px 20px;
+    font-size:14.5px; line-height:1.8; color:#6B4A1D;
+  }
+  .teacher-note b{display:block; margin-bottom:6px; color:var(--ruby-deep); font-family:'Noto Serif Thai',serif;}
+
+  .btn{font-family:'Sarabun',sans-serif; font-weight:600; border:none; cursor:pointer; padding:11px 22px; border-radius:3px; font-size:15px; transition:all .18s ease;}
+  .btn-primary{background:var(--ruby); color:#fff;}
+  .btn-primary:hover{background:var(--ruby-deep); transform:translateY(-1px);}
+  .btn-ghost{background:var(--bg); color:var(--ink); border:1px solid var(--line);}
+  .btn-ghost:hover{background:#F0E6D8;}
+
+  .reorder-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;}
+  .reorder-item{background:var(--bg); border:1px solid var(--line); border-radius:4px; padding:12px 14px; display:flex; align-items:center; gap:12px; font-size:15px;}
+  .reorder-item .idx{font-family:'Noto Serif Thai',serif; font-weight:700; color:var(--ruby); min-width:22px;}
+  .reorder-item .arrows{display:flex; flex-direction:column; gap:2px; margin-right:2px;}
+  .reorder-item .arrows button{border:none; background:var(--ruby); color:#fff; border-radius:3px; width:26px; height:22px; cursor:pointer; font-size:12px; line-height:1;}
+  .reorder-item .arrows button:hover{background:var(--ruby-deep);}
+  .result-banner{margin-top:14px; padding:12px 16px; border-radius:4px; font-weight:600; display:none;}
+  .result-banner.ok{background:var(--success-bg); color:var(--success); display:block;}
+  .result-banner.bad{background:var(--danger-bg); color:var(--danger); display:block;}
+
+  .match-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
+  @media(max-width:600px){.match-grid{grid-template-columns:repeat(2,1fr);}}
+  .match-card{
+    aspect-ratio:1.2/1; background:var(--ruby); border-radius:4px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; color:#fff; font-family:'Noto Serif Thai',serif; font-weight:600; font-size:13.5px; text-align:center;
+    padding:8px; user-select:none; transition:transform .15s ease; box-shadow:var(--shadow);
+  }
+  .match-card.flipped{background:#fff; color:var(--ink); border:2px solid var(--gold);}
+  .match-card.matched{background:var(--success-bg); color:var(--success); border:2px solid var(--success); cursor:default;}
+  .match-card:active{transform:scale(.96);}
+  .type-stats{display:flex; gap:18px; margin-bottom:10px; font-family:'Sarabun',sans-serif; font-weight:700; color:var(--ruby);}
+
+  .quiz-item{border-bottom:1px solid var(--line); padding:16px 0;}
+  .quiz-item:last-child{border-bottom:none;}
+  .quiz-item .qtext{font-weight:700; margin-bottom:10px; font-family:'Noto Serif Thai',serif; color:var(--ink);}
+  .quiz-opt{display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:4px; border:1.5px solid var(--line); margin-bottom:7px; cursor:pointer; font-size:14.5px;}
+  .quiz-opt:hover{background:var(--bg);}
+  .quiz-opt.correct{border-color:var(--success); background:var(--success-bg);}
+  .quiz-opt.wrong{border-color:var(--danger); background:var(--danger-bg);}
+  .quiz-score{margin-top:16px; padding:16px 20px; border-radius:4px; background:var(--bg); font-family:'Noto Serif Thai',serif; font-weight:700; color:var(--ruby); font-size:17px; display:none; border:1px solid var(--line);}
+
+  .student-form{display:flex; flex-direction:column; gap:14px;}
+  .form-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .form-row label{flex:1; min-width:140px; display:flex; flex-direction:column; gap:6px; font-family:'Sarabun',sans-serif; font-size:14px; color:var(--ink-soft); font-weight:600;}
+  .form-row input[type="text"]{padding:10px 12px; border:1.5px solid var(--line); border-radius:3px; font-size:15px; font-family:'Sarabun',sans-serif; color:var(--ink);}
+  .form-row input[type="text"]:focus{outline:none; border-color:var(--gold);}
+  .photo-row{align-items:center;}
+  .photo-label{cursor:pointer;}
+  .photo-label input[type="file"]{padding:8px; border:1.5px dashed var(--line); border-radius:3px; background:var(--bg); font-size:13px; font-family:'Sarabun',sans-serif; color:var(--ink-soft);}
+  .photo-preview{width:74px; height:74px; border-radius:50%; overflow:hidden; border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; background:var(--bg); font-size:10px; color:var(--ink-soft); text-align:center; flex-shrink:0; padding:4px;}
+  .photo-preview img{width:100%; height:100%; object-fit:cover;}
+
+  .modal-overlay{position:fixed; inset:0; background:rgba(26,26,26,0.62); display:none; align-items:center; justify-content:center; z-index:1000; padding:20px;}
+  .modal-overlay.active{display:flex;}
+  .modal-card{background:#fff; border-radius:6px; max-width:380px; width:100%; padding:28px 26px; text-align:center; border-top:4px solid var(--gold); box-shadow:var(--shadow);}
+  .modal-card img{width:110px; height:110px; border-radius:50%; object-fit:cover; border:3px solid var(--gold); margin-bottom:16px;}
+  .modal-card .modal-name{font-family:'Noto Serif Thai',serif; font-weight:700; font-size:17px; color:var(--ink); margin-bottom:8px;}
+  .modal-card .modal-score{font-family:'Noto Serif Thai',serif; font-weight:700; font-size:21px; color:var(--ruby); margin-bottom:6px;}
+  .modal-card .modal-warning{color:var(--danger); font-size:12.5px; margin-top:12px;}
+  .modal-card .btn{margin-top:18px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="thai-basic-m3-home.html" class="back-home">&larr; กลับหน้าหลักวิชา</a>
+  <div class="eyebrow">ภาคเรียนที่ ๑ &middot; หลังสอบกลางภาคเรียน &middot; บทที่ ๑๓</div>
+  <h1>ระดับภาษา</h1>
+  <p>เลือกใช้คำและรูปแบบภาษาให้เหมาะกับบุคคล กาลเทศะ และความสัมพันธ์</p>
+</div>
+
+<div style="max-width:860px; margin:20px auto 0; padding:0 16px;">
+  <div class="card" style="margin-bottom:0;">
+    <h3>ข้อมูลผู้เข้าสอบ <span class="tag">กรอกครั้งเดียว ใช้ได้ทุกบท</span></h3>
+    <div class="student-form">
+      <div class="form-row">
+        <label>ชื่อ<input type="text" id="stuFirst" placeholder="ชื่อ"></label>
+        <label>นามสกุล<input type="text" id="stuLast" placeholder="นามสกุล"></label>
+      </div>
+      <div class="form-row">
+        <label>ชั้น<input type="text" id="stuClass" placeholder="เช่น ม.3/1"></label>
+        <label>เลขที่<input type="text" id="stuNumber" placeholder="เลขที่"></label>
+      </div>
+      <div class="form-row photo-row">
+        <label class="photo-label" style="flex:2;">รูปภาพนักเรียน
+          <input type="file" accept="image/*" id="stuPhoto" onchange="previewPhoto()">
+        </label>
+        <div class="photo-preview" id="photoPreview"><span>ยังไม่ได้อัปโหลดรูป</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <div class="chapter-head">
+    <div class="num">๑๓</div>
+    <div>
+      <h2>ระดับภาษา</h2>
+      <span class="sub">หลักภาษาไทย &middot; การเลือกใช้ภาษาให้เหมาะกับบริบท</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>เนื้อหาบทเรียน <span class="tag">Content</span></h3>
+    <div class="content-block"><strong>ความหมาย</strong> — ระดับภาษา คือ รูปแบบการใช้ภาษาที่แตกต่างกันไปตามสถานการณ์ บริบท หรือผู้ร่วมสื่อสาร ขึ้นอยู่กับปัจจัยต่าง ๆ เช่น สถานะทางสังคม ความใกล้ชิด และความเป็นทางการ การเลือกใช้ระดับภาษาให้เหมาะสมช่วยให้การสื่อสารชัดเจน มีประสิทธิภาพ และแสดงถึงความมีมารยาทต่อคู่สนทนา</div>
+    <div class="content-block"><strong>ความสำคัญ</strong> — การใช้ภาษาให้ถูกต้องตามระดับช่วยให้ผู้รับสารเข้าใจเนื้อความได้ดี ทั้งยังแสดงถึงความให้เกียรติคู่สนทนา นักวิชาการแบ่งระดับภาษาไว้อย่างละเอียด ๕ ระดับ ดังนี้</div>
+  </div>
+
+  <div class="card">
+    <h3>ระดับภาษาทั้ง ๕ ระดับ <span class="tag">5 Levels</span></h3>
+
+    <div class="level-block">
+      <div class="level-title"><span class="level-num">๑</span>ภาษาระดับพิธีการ</div>
+      <p>ภาษาที่สมบูรณ์แบบ ถูกต้องตามหลักไวยากรณ์ ประณีตงดงาม เน้นความไพเราะและเป็นทางการอย่างชัดเจน ใช้ในงานเขียนทางราชการ เช่น คำกราบบังคมทูล บทสุนทรพจน์ผู้นำประเทศ คำกล่าวเปิดงานพิธีสำคัญ มักเป็นการสื่อสารทางเดียว เน้นประกาศ แจ้ง รายงาน</p>
+      <div class="example">ตัวอย่าง: "ขอพระราชทานกราบบังคมทูลทรงทราบฝ่าละอองพระบาท..."</div>
+    </div>
+
+    <div class="level-block">
+      <div class="level-title"><span class="level-num">๒</span>ภาษาระดับทางการ</div>
+      <p>ภาษาที่สุภาพ กระชับ ชัดเจน สื่อสารอย่างเป็นทางการ ใช้ในการเขียนจดหมายราชการ เช่น จดหมายเชิญวิทยากร จดหมายขอบคุณ จดหมายขอความอนุเคราะห์ รวมถึงรายงานการศึกษาค้นคว้า บทความวิชาการ และการเขียนตอบคำถามอัตนัย</div>
+    </div>
+
+    <div class="level-block">
+      <div class="level-title"><span class="level-num">๓</span>ภาษาระดับกึ่งทางการ</div>
+      <p>ภาษาที่เข้าใจได้ชัดเจน แต่ไม่เคร่งครัดเรื่องความกระชับและถ้อยคำสุภาพเท่าภาษาระดับพิธีการ/ทางการ พบในบทความนิตยสาร วารสาร บทสัมภาษณ์ คอลัมน์หนังสือพิมพ์ หรือบทสนทนาไม่เป็นทางการ เช่น ครูพูดกับศิษย์ ผู้บริหารพูดกับพนักงาน การรายงานข่าว</div>
+    </div>
+
+    <div class="level-block">
+      <div class="level-title"><span class="level-num">๔</span>ภาษาระดับไม่เป็นทางการ (ระดับสนทนา)</div>
+      <p>ภาษาที่ไม่เคร่งครัดตามแบบแผน ใช้สื่อสารทั่วไปในชีวิตประจำวันหรือโอกาสไม่เป็นทางการ มักใช้พูดในกลุ่มย่อยประมาณ ๕-๗ คน อาจมีคำสแลง คำต่างประเทศ หรือคำเฉพาะกลุ่ม ใช้สรรพนามแสดงความใกล้ชิด เช่น ฉัน เธอ พี่ น้อง ส่วนใหญ่พบในการพูดมากกว่าการเขียน</p>
+    </div>
+
+    <div class="level-block">
+      <div class="level-title"><span class="level-num">๕</span>ภาษาระดับกันเอง</div>
+      <p>ภาษาที่ใช้สื่อสารเฉพาะกลุ่มผู้ที่สนิทสนมกันมาก เช่น พี่น้อง เพื่อนสนิท อาจมีคำไม่สุภาพปะปน คำสแลง หรือคำต่างประเทศ ใช้สรรพนามอย่าง เอ็ง ข้า แก ควรระมัดระวังเมื่ออยู่ในที่สาธารณะ และควรหลีกเลี่ยงหากคู่สนทนาเป็นผู้อาวุโสกว่า</p>
+    </div>
+  </div>
+
+  <div class="divider"><span class="node"></span></div>
+
+  <div class="card">
+    <h3>ปัจจัยในการเลือกใช้ระดับภาษา <span class="tag">Analysis</span></h3>
+    <div class="content-block"><strong>๑. วัตถุประสงค์ของการสื่อสาร</strong> — ต้องพิจารณาว่าผู้ส่งสารต้องการให้ผู้รับสารเข้าใจ เกิดความสนุกสนาน เกิดอารมณ์สะเทือนใจ หรือเกิดความรู้สึกคล้อยตาม แล้วจึงเลือกระดับภาษาที่เหมาะสม การเลือกใช้ภาษาระดับทางการโดยไม่คำนึงถึงวัตถุประสงค์อาจทำให้สื่อสารไม่เข้าใจได้</div>
+    <div class="content-block"><strong>๒. ระดับความสัมพันธ์ของคู่สนทนา</strong> — เมื่อความสัมพันธ์ห่างกันมากหรือเป็นทางการ ควรใช้ภาษาสุภาพและเป็นทางการมากขึ้น หากสนิทสนมกันมาก ก็ใช้ภาษาระดับใกล้ชิดหรือไม่เป็นทางการได้ พิจารณาจากอายุ เพศ ความสัมพันธ์ในครอบครัว และสถานภาพทางสังคม</div>
+  </div>
+
+  <div class="card">
+    <h3>ข้อคิดที่ได้ <span class="tag">สรุป</span></h3>
+    <ul>
+      <li>คำที่มีความหมายเดียวกันอาจมีหลายระดับความสุภาพ เช่น กิน - ทาน - รับประทาน - บริโภค - เสวย ต้องเลือกใช้ให้เหมาะกับสถานการณ์และบุคคล</li>
+      <li>การใช้ภาษาระดับกันเองในที่สาธารณะหรือกับผู้อาวุโสกว่าถือเป็นการไม่ให้เกียรติผู้ฟัง</li>
+      <li>การสื่อสารในสื่อสังคมออนไลน์ แม้ไม่เป็นทางการมากนัก แต่ไม่ใช่พื้นที่ส่วนตัว จึงควรใช้ภาษาระดับไม่เป็นทางการมากกว่าระดับกันเอง</li>
+      <li>ผู้ใช้ภาษาที่ดีควรฝึกสังเกตบริบทและปรับระดับภาษาให้เหมาะสมอยู่เสมอ</li>
+    </ul>
+  </div>
+
+  <div class="divider"><span class="node"></span></div>
+
+  <div class="card">
+    <h3>กิจกรรม: เรียงลำดับความสุภาพของคำว่า "กิน" <span class="tag">ปลายปิด</span></h3>
+    <p>คำต่อไปนี้ล้วนมีความหมายว่า "กิน" แต่มีระดับความสุภาพต่างกัน จงเรียงลำดับจากคำที่สุภาพ/เป็นทางการที่สุด ไปจนถึงคำที่ไม่เป็นทางการที่สุด โดยใช้ปุ่มลูกศรขึ้น–ลง</p>
+    <ul class="reorder-list" id="reorder1"></ul>
+    <div style="margin-top:14px; display:flex; gap:10px;">
+      <button class="btn btn-primary" onclick="checkReorder('reorder1', reorder1Correct, 'result1')">ตรวจคำตอบ</button>
+      <button class="btn btn-ghost" onclick="renderReorder('reorder1', reorder1Correct)">สลับใหม่</button>
+    </div>
+    <div class="result-banner" id="result1"></div>
+  </div>
+
+  <div class="card">
+    <h3>เกม: จับคู่สถานการณ์กับระดับภาษา <span class="tag">Word Matching</span></h3>
+    <p>คลิกเปิดการ์ด 2 ใบ เพื่อจับคู่สถานการณ์การสื่อสารกับระดับภาษาที่เหมาะสม</p>
+    <div class="type-stats"><span id="matchScore">จับคู่แล้ว 0 / 5</span></div>
+    <div class="match-grid" id="matchGrid"></div>
+    <div style="margin-top:14px;"><button class="btn btn-ghost" onclick="initMatchGame()">เริ่มใหม่</button></div>
+  </div>
+
+  <div class="card">
+    <h3>กิจกรรม: เขียนบทสนทนา ๒ ระดับภาษา <span class="tag">ปลายเปิด</span></h3>
+    <p>เลือกสถานการณ์ 1 สถานการณ์ แล้วเขียนบทสนทนาสั้น ๆ 2 แบบ คือใช้ภาษาระดับทางการ และใช้ภาษาระดับไม่เป็นทางการ เพื่อเปรียบเทียบความแตกต่างของถ้อยคำที่เลือกใช้ ความยาวไม่น้อยกว่า 10 บรรทัดต่อแบบ</p>
+    <div class="teacher-note">
+      <b>หมายเหตุ:</b>
+      กิจกรรมนี้ให้จัดทำลงในกระดาษ/ไฟล์งาน และส่งชิ้นงานให้ครูผู้สอนโดยตรง ไม่ต้องบันทึกคำตอบลงบนเว็บไซต์
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>แบบทดสอบท้ายบท <span class="tag">10 ข้อ</span></h3>
+    <div id="quiz1"></div>
+    <button class="btn btn-primary" onclick="checkQuiz(1)">ตรวจคำตอบทั้งหมด</button>
+    <div class="quiz-score" id="quizScore1"></div>
+  </div>
+
+</main>
+
+<div class="modal-overlay" id="resultModalOverlay">
+  <div class="modal-card">
+    <img id="modalPhoto" src="" alt="รูปนักเรียน">
+    <div class="modal-name" id="modalName"></div>
+    <div class="modal-score" id="modalScoreText"></div>
+    <div class="modal-warning">กรุณาบันทึกภาพหน้าจอเพื่อเก็บเป็นหลักฐาน</div>
+    <button class="btn btn-primary" onclick="closeResultModal()">ปิด</button>
+  </div>
+</div>
+
+<script>
+/* ============ REORDER ACTIVITY ============ */
+const reorder1Correct = [
+  "เสวย (ใช้กับพระมหากษัตริย์ พระบรมวงศานุวงศ์)",
+  "บริโภค (ใช้ในภาษาเขียน ภาษาราชการ)",
+  "รับประทาน (สุภาพ ใช้ทั่วไปกับบุคคลทั่วไป)",
+  "ทาน (กึ่งทางการ ใช้ในชีวิตประจำวัน)",
+  "กิน (ไม่เป็นทางการ/กันเอง ใช้กับคนสนิท)"
+];
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function renderReorder(containerId, correctArr){
+  const ul = document.getElementById(containerId);
+  let order = shuffle(correctArr);
+  let tries=0;
+  while(JSON.stringify(order)===JSON.stringify(correctArr) && tries<10){ order = shuffle(correctArr); tries++; }
+  ul.dataset.state = JSON.stringify(order);
+  paintReorder(containerId);
+  document.getElementById('result1').className='result-banner';
+  document.getElementById('result1').textContent='';
+}
+
+function paintReorder(containerId){
+  const ul = document.getElementById(containerId);
+  const order = JSON.parse(ul.dataset.state);
+  ul.innerHTML = order.map((text,i)=>`
+    <li class="reorder-item">
+      <span class="idx">${i+1}.</span>
+      <div class="arrows">
+        <button onclick="moveReorder('${containerId}',${i},-1)">▲</button>
+        <button onclick="moveReorder('${containerId}',${i},1)">▼</button>
+      </div>
+      <span>${text}</span>
+    </li>
+  `).join('');
+}
+
+function moveReorder(containerId, i, dir){
+  const ul = document.getElementById(containerId);
+  const order = JSON.parse(ul.dataset.state);
+  const j = i+dir;
+  if(j<0||j>=order.length) return;
+  [order[i],order[j]] = [order[j],order[i]];
+  ul.dataset.state = JSON.stringify(order);
+  paintReorder(containerId);
+}
+
+function checkReorder(containerId, correctArr, resultId){
+  const ul = document.getElementById(containerId);
+  const order = JSON.parse(ul.dataset.state);
+  const ok = JSON.stringify(order)===JSON.stringify(correctArr);
+  const el = document.getElementById(resultId);
+  el.className = 'result-banner ' + (ok?'ok':'bad');
+  el.textContent = ok ? '✅ เรียงลำดับถูกต้องเยี่ยมมาก!' : '❌ ลำดับยังไม่ถูกต้อง ลองจัดเรียงใหม่อีกครั้ง';
+}
+
+renderReorder('reorder1', reorder1Correct);
+
+/* ============ MATCHING GAME ============ */
+const wordPairs = [
+  {en:"คำกราบบังคมทูล / บทสุนทรพจน์ผู้นำประเทศ", th:"ภาษาระดับพิธีการ"},
+  {en:"จดหมายราชการ เช่น จดหมายเชิญวิทยากร", th:"ภาษาระดับทางการ"},
+  {en:"บทความในนิตยสาร บทสัมภาษณ์ ครูพูดกับศิษย์", th:"ภาษาระดับกึ่งทางการ"},
+  {en:"สนทนากับเพื่อนกลุ่มย่อย 5-7 คน มีคำสแลงปนบ้าง", th:"ภาษาระดับไม่เป็นทางการ"},
+  {en:"พี่น้องคุยกันแบบสนิทสนม ใช้คำว่า เอ็ง ข้า แก", th:"ภาษาระดับกันเอง"}
+];
+let matchState = {first:null, matched:0, locked:false};
+
+function initMatchGame(){
+  matchState = {first:null, matched:0, locked:false};
+  document.getElementById('matchScore').textContent = 'จับคู่แล้ว 0 / 5';
+  let cards = [];
+  wordPairs.forEach((p,i)=>{
+    cards.push({key:i, text:p.en, type:'en'});
+    cards.push({key:i, text:p.th, type:'th'});
+  });
+  cards = shuffle(cards);
+  const grid = document.getElementById('matchGrid');
+  grid.innerHTML = cards.map((c,idx)=>`
+    <div class="match-card" data-key="${c.key}" data-idx="${idx}" onclick="flipCard(this)">${c.text}</div>
+  `).join('');
+}
+
+function flipCard(el){
+  if(matchState.locked || el.classList.contains('flipped') || el.classList.contains('matched')) return;
+  el.classList.add('flipped');
+  if(!matchState.first){
+    matchState.first = el;
+    return;
+  }
+  const a = matchState.first, b = el;
+  if(a.dataset.key === b.dataset.key && a !== b){
+    a.classList.add('matched'); b.classList.add('matched');
+    matchState.matched++;
+    matchState.first = null;
+    document.getElementById('matchScore').textContent = `จับคู่แล้ว ${matchState.matched} / 5`;
+  } else {
+    matchState.locked = true;
+    setTimeout(()=>{
+      a.classList.remove('flipped'); b.classList.remove('flipped');
+      matchState.first = null; matchState.locked = false;
+    }, 700);
+  }
+}
+initMatchGame();
+
+/* ============ QUIZ ============ */
+const quizData = {
+  1:[
+    {q:'ระดับภาษา หมายถึงข้อใด', opts:['การใช้คำศัพท์ยากในบทเรียน','รูปแบบการใช้ภาษาที่แตกต่างกันตามสถานการณ์ บริบท หรือผู้สื่อสาร','การท่องจำไวยากรณ์ภาษาไทย','การใช้ภาษาต่างประเทศปนภาษาไทย'], correct:1},
+    {q:'นักวิชาการแบ่งระดับภาษาไว้อย่างละเอียดกี่ระดับ', opts:['๓ ระดับ','๔ ระดับ','๕ ระดับ','๖ ระดับ'], correct:2},
+    {q:'ภาษาระดับใดใช้ในคำกราบบังคมทูลและบทสุนทรพจน์ของผู้นำประเทศ', opts:['ภาษาระดับทางการ','ภาษาระดับพิธีการ','ภาษาระดับกึ่งทางการ','ภาษาระดับกันเอง'], correct:1},
+    {q:'ภาษาระดับทางการมักใช้ในงานเขียนประเภทใด', opts:['จดหมายถึงเพื่อนสนิท','จดหมายราชการ เช่น จดหมายขอความอนุเคราะห์','บทสนทนาในครอบครัว','ข้อความในสื่อสังคมออนไลน์'], correct:1},
+    {q:'ภาษาระดับกึ่งทางการมักพบในสื่อประเภทใด', opts:['คำสั่งราชการ','บทความในนิตยสารและบทสัมภาษณ์','คำกล่าวเปิดงานพิธีสำคัญ','บทสนทนาระหว่างเพื่อนสนิทมาก'], correct:1},
+    {q:'ภาษาระดับไม่เป็นทางการมักใช้สนทนาในกลุ่มขนาดเท่าใด', opts:['๑-๒ คน','๕-๗ คน','๒๐-๓๐ คน','ไม่จำกัดจำนวน'], correct:1},
+    {q:'คำสรรพนามใดเป็นลักษณะของภาษาระดับกันเอง', opts:['ดิฉัน กระผม','ท่าน คุณ','เอ็ง ข้า แก','กระหม่อม ข้าพระพุทธเจ้า'], correct:2},
+    {q:'ควรหลีกเลี่ยงการใช้ภาษาระดับกันเองในกรณีใด', opts:['คุยกับพี่น้องในครอบครัว','คุยกับเพื่อนสนิท','คุยกับผู้อาวุโสกว่าหรือในที่สาธารณะ','เขียนข้อความหาเพื่อนสนิท'], correct:2},
+    {q:'ปัจจัยใดมีผลต่อการเลือกใช้ระดับภาษา', opts:['ความยาวของประโยคเท่านั้น','วัตถุประสงค์การสื่อสารและความสัมพันธ์ของคู่สนทนา','จำนวนคำในประโยค','สีของกระดาษที่ใช้เขียน'], correct:1},
+    {q:'คำว่า "เสวย" ในกลุ่มคำที่แปลว่า "กิน" จัดอยู่ในระดับความสุภาพใด', opts:['สุภาพน้อยที่สุด','ใช้ในชีวิตประจำวันทั่วไป','สุภาพสูงสุด ใช้กับพระมหากษัตริย์','เป็นคำสแลง'], correct:2}
+  ]
+};
+
+function renderQuiz(chapterNum){
+  const container = document.getElementById('quiz'+chapterNum);
+  container.innerHTML = quizData[chapterNum].map((item,qi)=>`
+    <div class="quiz-item" data-qi="${qi}">
+      <div class="qtext">${qi+1}. ${item.q}</div>
+      ${item.opts.map((opt,oi)=>`
+        <label class="quiz-opt" data-oi="${oi}">
+          <input type="radio" name="q${chapterNum}_${qi}" value="${oi}" style="accent-color:#9B1B30;">
+          ${opt}
+        </label>
+      `).join('')}
+    </div>
+  `).join('');
+}
+renderQuiz(1);
+
+/* ============ STUDENT FORM + RESULT MODAL ============ */
+function previewPhoto(){
+  const input = document.getElementById('stuPhoto');
+  const preview = document.getElementById('photoPreview');
+  const file = input.files && input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    preview.innerHTML = `<img src="${e.target.result}" alt="รูปนักเรียน">`;
+    preview.dataset.photo = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function showResultModal(info){
+  document.getElementById('modalPhoto').src = info.photo;
+  document.getElementById('modalName').textContent = `${info.name} ชั้น ${info.cls} เลขที่ ${info.num}`;
+  document.getElementById('modalScoreText').textContent = `ได้คะแนนแบบทดสอบท้ายบทที่ ${info.chapterNum} จำนวน ${info.score} คะแนน`;
+  document.getElementById('resultModalOverlay').classList.add('active');
+}
+function closeResultModal(){
+  document.getElementById('resultModalOverlay').classList.remove('active');
+}
+
+function checkQuiz(chapterNum){
+  const items = quizData[chapterNum];
+
+  const first = document.getElementById('stuFirst').value.trim();
+  const last = document.getElementById('stuLast').value.trim();
+  const cls = document.getElementById('stuClass').value.trim();
+  const num = document.getElementById('stuNumber').value.trim();
+  const photoPreview = document.getElementById('photoPreview');
+  const photoData = photoPreview.dataset.photo;
+
+  if(!first || !last || !cls || !num || !photoData){
+    alert('กรุณากรอกชื่อ นามสกุล ชั้น เลขที่ และอัปโหลดรูปภาพให้ครบก่อนทำแบบทดสอบ (กรอกที่การ์ด "ข้อมูลผู้เข้าสอบ" ด้านบนสุดของหน้า)');
+    return;
+  }
+
+  const quizContainer = document.getElementById('quiz'+chapterNum);
+  let score = 0;
+  items.forEach((item,qi)=>{
+    const scopedItem = quizContainer.querySelector(`.quiz-item[data-qi="${qi}"]`);
+    const optEls = scopedItem.querySelectorAll('.quiz-opt');
+    optEls.forEach(o=>o.classList.remove('correct','wrong'));
+    const chosen = scopedItem.querySelector(`input[name="q${chapterNum}_${qi}"]:checked`);
+    if(chosen){
+      const chosenOi = parseInt(chosen.value);
+      const chosenEl = scopedItem.querySelector(`.quiz-opt[data-oi="${chosenOi}"]`);
+      if(chosenOi === item.correct){
+        score++;
+        if(chosenEl) chosenEl.classList.add('correct');
+      } else {
+        if(chosenEl) chosenEl.classList.add('wrong');
+      }
+    }
+  });
+
+  const el = document.getElementById('quizScore'+chapterNum);
+  el.style.display='block';
+  el.textContent = `ผลคะแนน: ${score} / ${items.length} ข้อ`;
+
+  showResultModal({
+    name:`${first} ${last}`, cls, num, chapterNum, score, photo:photoData
+  });
+}
+</script>
+</body>
+</html>
